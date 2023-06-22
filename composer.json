@@ -1,0 +1,14 @@
+{
+    "name": "accurate/shipping-php",
+    "description": "Wraps Accurate Logistics API",
+    "type": "library",
+    "require": {
+        "php": ">=8.0"
+    },
+    "authors": [
+        {
+            "name": "Mahmoud Alwakeel",
+            "email": "mahmoud@accuratess.com"
+        }
+    ]
+}
