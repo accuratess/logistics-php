@@ -112,9 +112,20 @@ class Shipment extends CoreService
                 'first' => $first,
                 'page' => $page
             ])->setSelectionSet(
-                [(new Query('data'))->setSelectionSet(
-                    $field->toArray()
-                )]
+                [
+                    (new Query('paginatorInfo'))->setSelectionSet(
+                        [
+                            "hasMorePages",
+                            "currentPage",
+                            "count",
+                            "total",
+                            "lastPage"
+                        ]
+                    ),
+                    (new Query('data'))->setSelectionSet(
+                        $field->toArray()
+                    )
+                ]
             );
 
         $result = (object) array_filter((array) $input, fn ($val) => !is_null($val));
