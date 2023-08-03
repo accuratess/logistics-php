@@ -101,7 +101,7 @@ class Shipment extends CoreService
      * @param integer|null $page
      * @return void
      */
-    public function listShipments(ListShipmentFilter $input, array $output, $paginatorInfo = null, int $first = null, int $page = null)
+    public function listShipments(ListShipmentFilter $input, array $output, int $first = null, int $page = null): object
     {
         $field = new Field(ShipmentField::class, $output);
 
@@ -132,8 +132,9 @@ class Shipment extends CoreService
         $variables = [
             'input' => $result, 'first' => $first, 'page' => $page
         ];
-
-        return $this->runOperation($query, $variables);
+        /** @var mixed */
+        $result = $this->runOperation($query, $variables);
+        return $result;
     }
 
     /**
