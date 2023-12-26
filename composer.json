@@ -1,11 +1,10 @@
 {
-    "name": "accurate/logistics-php-test",
+    "name": "accurate/logistics-php",
     "description": "Wraps Accurate Logistics API",
     "license": "MIT",
     "type": "library",
     "require": {
         "php": ">=8.1",
-        "bensampo/laravel-enum": "^6.3",
         "gmostafa/php-graphql-client": "^1.13"
     },
     "authors": [

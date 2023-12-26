@@ -12,7 +12,6 @@ use Accurate\Shipping\Models\Inputs\Fields\ReturnField;
  */
 class UpdateStatus
 {
-
     public function __construct(
         public int $id,
         public ?string $notes = '',

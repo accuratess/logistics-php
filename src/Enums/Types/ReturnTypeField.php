@@ -4,11 +4,10 @@ namespace Accurate\Shipping\Enums\Types;
 
 enum ReturnTypeField: string
 {
-    case WFDF = "WFDF";    // With Fully Due Fess استحقاق كامل المصروفات من الراسل 
-    case WODF = "WODF";    // Without Due Fees بدون تحمل اي مصروفات 
-    case WPDF = "WPDF";    // With Partially Due Fees   من الراسل تحمل جزء من المصروفات 
-    case FPC = "FPC";      // Fees Partially Collected تم تحصيل جزء من مصاريف الشحن من المستلم 
-
-    case FFC = "FFC";      // Fees Fully Collected تم تحصيل مصاريف الشحن من المستلم 
+    case WFDF = "WFDF";    // With Fully Due Fess
+    case WODF = "WODF";    // Without Due Fees
+    case WPDF = "WPDF";    // With Partially Due Fees
+    case FPC = "FPC";      // Fees Partially Collected 
+    case FFC = "FFC";      // Fees Fully Collected 
     case PRTS = "PRTS";    // Partially Returning
 }
