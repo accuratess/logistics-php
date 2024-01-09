@@ -188,42 +188,42 @@ class Shipment
      *
      * @var string $senderName
      */
-    public string $senderName;
+    public $senderName;
 
     /**
      * 
      *
      * @var string $senderPhone
      */
-    public string $senderPhone;
+    public $senderPhone;
 
     /**
      * 
      *
      * @var string $senderMobile
      */
-    public string $senderMobile;
+    public $senderMobile;
 
     /**
      * 
      *
      * @var int $senderSubzoneId
      */
-    public int $senderSubzoneId;
+    public $senderSubzoneId;
 
     /**
      * 
      *
      * @var int $senderZoneId
      */
-    public int $senderZoneId;
+    public $senderZoneId;
 
     /**
      * 
      *
      * @var string $senderAddress
      */
-    public string $senderAddress;
+    public $senderAddress;
 
     public function __construct(
         float $weight,
@@ -234,13 +234,13 @@ class Shipment
         int $recipientSubzoneId,
         int $recipientZoneId,
         string $recipientName,
-        string $senderName,
-        string $senderPhone,
-        string $senderMobile,
-        string $senderAddress,
-        int $senderSubzoneId,
-        int $senderZoneId,
 
+        string $senderName = null,
+        string $senderPhone = null,
+        string $senderMobile = null,
+        string $senderAddress = null,
+        int $senderSubzoneId = null,
+        int $senderZoneId = null,
         $id = null,
         string $code = null,
         int $piecesCount = 1,

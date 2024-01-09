@@ -79,7 +79,6 @@ enum PickupField: string
     case MESSAGES = "messages";
     case RECIPIENT_ZONE = "recipientZone";
     case RECIPIENT_SUBZONE = "recipientSubzone";
-    case BUSINESS_TYPE = "businessType";
     case SENDER_ZONE = "senderZone";
     case SENDER_SUBZONE = "senderSubzone";
 
@@ -174,11 +173,6 @@ enum PickupField: string
     }
 
     static function returnType(array $fields): Field
-    {
-        return new Field(DropDownField::class, $fields, $scopeName = __FUNCTION__);
-    }
-
-    static function businessType(array $fields): Field
     {
         return new Field(DropDownField::class, $fields, $scopeName = __FUNCTION__);
     }
