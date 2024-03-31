@@ -17,7 +17,7 @@ enum PickupField: string
     case UPDATEDAT = "updatedAt";
     case DESCRIPTION = "description";
     case DELIVERYDATE = "deliveryDate";
-    case DELIVEREDCANCELEDDATE = "deliveredCanceledDate";
+    case DELIVEREDORRETURNEDDATE = "deliveredOrReturnedDate";
     case WEIGHT = "weight";
     case PIECESCOUNT = "piecesCount";
     case DATE = "date";
