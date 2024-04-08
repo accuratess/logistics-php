@@ -9,6 +9,10 @@
             "email": "mahmoud@accuratess.com"
         }
    ],
+    "require": {
+        "php": ">=8.1",
+        "gmostafa/php-graphql-client": "^1.13"
+    },
     "autoload": {
         "psr-4": {
           "Accurate\\Shipping\\":"src/"
