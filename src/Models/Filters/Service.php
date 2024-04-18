@@ -16,16 +16,16 @@ class Service
      *
      * @var int $fromZoneId
      */
-    public int $fromZoneId;
+    public $fromZoneId;
 
     /**
      *
      *
      * @var int $fromSubzoneId
      */
-    public int $fromSubzoneId;
+    public $fromSubzoneId;
 
-    public function __construct(int $serviceId,int $fromZoneId,int $fromSubzoneId)
+    public function __construct(int $serviceId, $fromZoneId = null, $fromSubzoneId = null)
     {
         $this->serviceId = $serviceId;
         $this->fromZoneId = $fromZoneId;
