@@ -233,7 +233,7 @@ class Shipment
         string $recipientAddress,
         int $recipientSubzoneId,
         int $recipientZoneId,
-        string $recipientName,
+        string $recipientName = null,
 
         string $senderName = null,
         string $senderPhone = null,
