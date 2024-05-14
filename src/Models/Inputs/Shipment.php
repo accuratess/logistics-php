@@ -181,7 +181,7 @@ class Shipment
      *
      * @var string $recipientName
      */
-    public string $recipientName;
+    public ?string $recipientName;
 
     /**
      * 
