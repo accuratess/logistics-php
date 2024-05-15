@@ -2,17 +2,18 @@
 
 namespace Accurate\Shipping\Services;
 
+use GraphQL\Query;
+use GraphQL\Mutation;
+use GraphQL\Variable;
 use Accurate\Shipping\Enums\Fields\Core\Field;
 use Accurate\Shipping\Enums\Fields\PickupField;
+use Accurate\Shipping\Enums\Fields\ShipmentField;
 use Accurate\Shipping\Models\Filters\ListPickupFilter;
-use Accurate\Shipping\Models\Filters\ShipmentById as FiltersShipmentById;
 use Accurate\Shipping\Models\Inputs\filters\ShipmentById;
+use Accurate\Shipping\Services\Core\Service as CoreService;
 use Accurate\Shipping\Models\Inputs\Shipment as InputsShipment;
 use Accurate\Shipping\Models\Inputs\UpdateStatus as UpdateStatusInput;
-use Accurate\Shipping\Services\Core\Service as CoreService;
-use GraphQL\Mutation;
-use GraphQL\Query;
-use GraphQL\Variable;
+use Accurate\Shipping\Models\Filters\ShipmentById as FiltersShipmentById;
 
 /**
  * 
