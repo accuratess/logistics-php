@@ -251,7 +251,7 @@ class Shipment
         $id = null,
         string $code = null,
         int $piecesCount = 1,
-        int $returnPiecesCount = null,
+        int $returnPiecesCount = 0,
         int $serviceId = 1,
         string $notes = '',
         string $description = '',
