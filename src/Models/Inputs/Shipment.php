@@ -280,6 +280,7 @@ class Shipment
         $this->code = $code;
         $this->weight = $weight;
         $this->piecesCount = $piecesCount;
+        $this->returnPiecesCount = $returnPiecesCount;
         $this->openableCode = $openableCode;
         $this->serviceId = $serviceId;
         $this->notes = $notes;
