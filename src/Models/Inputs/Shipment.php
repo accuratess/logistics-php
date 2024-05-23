@@ -67,6 +67,13 @@ class Shipment
     /**
      * 
      *
+     * @var int $returnPiecesCount
+     */
+    public int $returnPiecesCount;
+
+    /**
+     * 
+     *
      * @var BooleanTypeCode $openableCode
      */
     public $openableCode;
@@ -181,7 +188,7 @@ class Shipment
      *
      * @var string $recipientName
      */
-    public ?string $recipientName;
+    public string $recipientName;
 
     /**
      * 
@@ -233,7 +240,7 @@ class Shipment
         string $recipientAddress,
         int $recipientSubzoneId,
         int $recipientZoneId,
-        string $recipientName = null,
+        string $recipientName,
 
         string $senderName = null,
         string $senderPhone = null,
@@ -244,6 +251,7 @@ class Shipment
         $id = null,
         string $code = null,
         int $piecesCount = 1,
+        int $returnPiecesCount = null,
         int $serviceId = 1,
         string $notes = '',
         string $description = '',
@@ -272,6 +280,7 @@ class Shipment
         $this->code = $code;
         $this->weight = $weight;
         $this->piecesCount = $piecesCount;
+        $this->returnPiecesCount = $returnPiecesCount;
         $this->openableCode = $openableCode;
         $this->serviceId = $serviceId;
         $this->notes = $notes;
