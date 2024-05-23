@@ -67,9 +67,9 @@ class Shipment
     /**
      * 
      *
-     * @var int $returnPiecesCount
+     * @var $returnPiecesCount
      */
-    public int $returnPiecesCount;
+    public $returnPiecesCount;
 
     /**
      * 
@@ -251,7 +251,7 @@ class Shipment
         $id = null,
         string $code = null,
         int $piecesCount = 1,
-        int $returnPiecesCount = null,
+        $returnPiecesCount = null,
         int $serviceId = 1,
         string $notes = '',
         string $description = '',
