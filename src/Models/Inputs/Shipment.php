@@ -251,7 +251,7 @@ class Shipment
         $id = null,
         string $code = null,
         int $piecesCount = 1,
-        int $returnPiecesCount = 0,
+        int $returnPiecesCount = null,
         int $serviceId = 1,
         string $notes = '',
         string $description = '',
@@ -280,7 +280,6 @@ class Shipment
         $this->code = $code;
         $this->weight = $weight;
         $this->piecesCount = $piecesCount;
-        $this->returnPiecesCount = $returnPiecesCount;
         $this->openableCode = $openableCode;
         $this->serviceId = $serviceId;
         $this->notes = $notes;
@@ -291,5 +290,11 @@ class Shipment
         $this->typeCode = $typeCode;
         $this->size = $size;
         $this->price = $price;
+        $this->prepareForInput();
+    }
+
+    public function prepareForInput(): void
+    {
+        if (is_null($this->returnPiecesCount)) unset($this->returnPiecesCount);
     }
 }
