@@ -8,10 +8,9 @@ use Accurate\Shipping\Models\Inputs\Fields\Return\Core\ReturnType;
 
 class WithoutDueField extends ReturnType
 {
-    public function __construct()
+    public function __construct(public int $cancellationReasonId)
     {
         $this->statusCode = (ShipmentStatusField::RTS)->value;
         $this->returnTypeCode = (ReturnTypeField::WODF)->value;
-        $this->cancellationReasonId = 1;
     }
 }

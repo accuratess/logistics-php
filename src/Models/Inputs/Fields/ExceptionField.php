@@ -7,11 +7,9 @@ use Accurate\Shipping\Enums\Types\ShipmentStatusField;
 class ExceptionField
 {
     public string $statusCode;
-    public int $cancellationReasonId;
 
-    public function __construct()
+    public function __construct(public int $cancellationReasonId)
     {
         $this->statusCode = (ShipmentStatusField::DEX)->value;
-        $this->cancellationReasonId = 1;
     }
 }

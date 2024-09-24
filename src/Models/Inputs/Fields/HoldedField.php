@@ -7,13 +7,11 @@ use Accurate\Shipping\Enums\Types\ShipmentStatusField;
 class HoldedField
 {
     public string $statusCode;
-    public int $cancellationReasonId;
 
     public function __construct(
+        public int $cancellationReasonId,
         public $deliveryDate = null,
     ) {
         $this->statusCode = (ShipmentStatusField::HTR)->value;
-        $this->cancellationReasonId = 1;
-        $this->deliveryDate = $deliveryDate;
     }
 }

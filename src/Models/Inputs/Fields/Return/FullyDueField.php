@@ -8,10 +8,9 @@ use Accurate\Shipping\Models\Inputs\Fields\Return\Core\ReturnType;
 
 class FullyDueField extends  ReturnType
 {
-    public function __construct()
+    public function __construct(public int $cancellationReasonId)
     {
         $this->returnTypeCode = (ReturnTypeField::WFDF)->value;
         $this->statusCode = (ShipmentStatusField::RTS)->value;
-        $this->cancellationReasonId = 1;
     }
 }

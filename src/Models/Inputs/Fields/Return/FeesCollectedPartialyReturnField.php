@@ -16,11 +16,9 @@ class FeesCollectedPartialyReturnField extends ReturnType
      *
      * @param float $fees
      */
-    public function __construct(public float $fees)
+    public function __construct(public float $fees, public int $cancellationReasonId)
     {
         $this->statusCode = (ShipmentStatusField::RTS)->value;
         $this->returnTypeCode = (ReturnTypeField::FPC)->value;
-        $this->cancellationReasonId = 1;
-        $this->fees = $fees;
     }
 }
