@@ -69,7 +69,7 @@ class Shipment
      *
      * @var $returnPiecesCount
      */
-    public $returnPiecesCount;
+    public ?int $returnPiecesCount;
 
     /**
      * 
@@ -216,14 +216,14 @@ class Shipment
      *
      * @var int $senderSubzoneId
      */
-    public $senderSubzoneId;
+    public ?int $senderSubzoneId;
 
     /**
      * 
      *
      * @var int $senderZoneId
      */
-    public $senderZoneId;
+    public ?int $senderZoneId;
 
     /**
      * 

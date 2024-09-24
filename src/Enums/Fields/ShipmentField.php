@@ -82,10 +82,16 @@ enum ShipmentField: string
     case RECIPIENT_SUBZONE = "recipientSubzone";
     case SENDER_ZONE = "senderZone";
     case SENDER_SUBZONE = "senderSubzone";
+    case LASTDELIVERYAGENT = "lastDeliveryAgent";
 
     static function customer(array $fields): Field
     {
         return new Field(CustomerField::class, $fields, $scopeName = __FUNCTION__);
+    }
+
+    static function lastDeliveryAgent(array $fields): Field
+    {
+        return new Field(DeliveryAgentField::class, $fields, $scopeName = __FUNCTION__);
     }
 
     static function size(array $fields): Field
