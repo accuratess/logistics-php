@@ -106,11 +106,11 @@ class Shipment extends CoreService
         $field = new Field(ShipmentField::class, $output);
 
         $query = (new Query('listShipments'))
-            ->setVariables([new Variable('input', 'ListShipmentsFilterInput', true)])
+            ->setVariables([new Variable('input', 'ListShipmentsFilterInput', true), new Variable('first', 'Int', true), new Variable('page', 'Int', true)])
             ->setArguments([
                 'input' => '$input',
-                'first' => $first,
-                'page' => $page
+                'first' => '$first',
+                'page' => '$page'
             ])->setSelectionSet(
                 [
                     (new Query('paginatorInfo'))->setSelectionSet(
@@ -128,10 +128,13 @@ class Shipment extends CoreService
                 ]
             );
 
-        $result = (object) array_filter((array) $input, fn ($val) => !is_null($val));
+        $result = (object) array_filter((array) $input, fn($val) => !is_null($val));
         $variables = [
-            'input' => $result, 'first' => $first, 'page' => $page
+            'input' => $result,
+            'first' => $first ?? 20,
+            'page' => $page ?? 1
         ];
+
         /** @var mixed */
         $result = $this->runOperation($query, $variables);
         return $result;
