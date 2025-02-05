@@ -4,8 +4,6 @@ namespace Accurate\Shipping\Services\Core;
 
 use Accurate\Shipping\Client\Client;
 use GraphQL\Exception\QueryError;
-use GraphQL\Query;
-use Illuminate\Support\Facades\Response;
 
 class Service
 {
@@ -16,13 +14,19 @@ class Service
      * @param array $variables
      * @return void
      */
-    function runOperation(object $operation, ?array $variables = null): object
+    function runOperation(object $operation, ?array $variables = null)
     {
         try {
-            $mutationesponse = Client::$shared->runQuery($operation, true, $variables ?? []);
-            return Response::json($mutationesponse->getResults(), 200);
+            $mutationResponse = Client::$shared->runQuery($operation, true, $variables ?? []);
+            return json_encode([
+                'status' => 200,
+                'data' => $mutationResponse->getResults()
+            ]);
         } catch (QueryError $e) {
-            return Response::json($e->getErrorDetails(), 500);
+            return json_encode([
+                'status' => 500,
+                'data' => $e->getErrorDetails()
+            ]);
         }
     }
 }
