@@ -167,7 +167,7 @@ class Shipment
      *
      * @var string $recipientPhone
      */
-    public string $recipientPhone;
+    public ?string $recipientPhone;
 
     /**
      * 
@@ -235,23 +235,24 @@ class Shipment
     public function __construct(
         float $weight,
         float $price,
-        string $recipientPhone,
         string $recipientMobile,
         string $recipientAddress,
         int $recipientSubzoneId,
         int $recipientZoneId,
-        string $recipientName = null,
 
-        string $senderName = null,
-        string $senderPhone = null,
-        string $senderMobile = null,
-        string $senderAddress = null,
-        int $senderSubzoneId = null,
-        int $senderZoneId = null,
-        int $id = null,
-        string $code = null,
+        $recipientPhone = null,
+        $recipientName = null,
+        $senderName = null,
+        $senderPhone = null,
+        $senderMobile = null,
+        $senderAddress = null,
+        $senderSubzoneId = null,
+        $senderZoneId = null,
+
+        $id = null,
+        $code = null,
+        $returnPiecesCount = null,
         int $piecesCount = 1,
-        int $returnPiecesCount = null,
         int $serviceId = 1,
         string $notes = '',
         string $description = '',

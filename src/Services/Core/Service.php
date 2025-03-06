@@ -18,15 +18,17 @@ class Service
     {
         try {
             $mutationResponse = Client::$shared->runQuery($operation, true, $variables ?? []);
-            return json_encode([
+            $result =  [
                 'status' => 200,
                 'data' => $mutationResponse->getResults()
-            ]);
+            ];
+            return (object)$result;
         } catch (QueryError $e) {
-            return json_encode([
+            $result =  [
                 'status' => 500,
                 'data' => $e->getErrorDetails()
-            ]);
+            ];
+            return (object)$result;
         }
     }
 }
