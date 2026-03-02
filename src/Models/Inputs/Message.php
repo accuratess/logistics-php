@@ -9,6 +9,7 @@ class Message
         public ?int $shipmentId = null,
         public ?string $body = null,
         public ?array $images = [],
+        public bool $syncIntegration = false,
     ) {
         $this->removeNullable();
     }
