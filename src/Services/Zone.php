@@ -6,8 +6,8 @@ use Accurate\Shipping\Enums\Fields\Core\Field;
 use Accurate\Shipping\Enums\Fields\ZoneField;
 use Accurate\Shipping\Models\Filters\ListZonesFilter;
 use Accurate\Shipping\Services\Core\Service;
-use GraphQL\Query;
-use GraphQL\Variable;
+use Accurate\Shipping\Client\Query;
+use Accurate\Shipping\Client\Variable;
 
 class Zone extends Service
 {

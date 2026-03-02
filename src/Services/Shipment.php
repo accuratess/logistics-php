@@ -10,9 +10,9 @@ use Accurate\Shipping\Models\Inputs\filters\ShipmentById;
 use Accurate\Shipping\Models\Inputs\Shipment as InputsShipment;
 use Accurate\Shipping\Models\Inputs\UpdateStatus as UpdateStatusInput;
 use Accurate\Shipping\Services\Core\Service as CoreService;
-use GraphQL\Mutation;
-use GraphQL\Query;
-use GraphQL\Variable;
+use Accurate\Shipping\Client\Mutation;
+use Accurate\Shipping\Client\Query;
+use Accurate\Shipping\Client\Variable;
 
 /**
  * 

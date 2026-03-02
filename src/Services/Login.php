@@ -6,8 +6,8 @@ use Accurate\Shipping\Enums\Fields\Core\Field;
 use Accurate\Shipping\Enums\Fields\LoginField;
 use Accurate\Shipping\Models\Inputs\Login as LoginInput;
 use Accurate\Shipping\Services\Core\Service;
-use GraphQL\Mutation;
-use GraphQL\Variable;
+use Accurate\Shipping\Client\Mutation;
+use Accurate\Shipping\Client\Variable;
 
 class Login extends Service
 {

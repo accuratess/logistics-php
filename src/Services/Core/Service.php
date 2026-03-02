@@ -23,10 +23,10 @@ class Service
                 'data' => $mutationResponse->getResults()
             ];
             return (object)$result;
-        } catch (QueryError $e) {
+        } catch (\Exception $e) {
             $result =  [
                 'status' => 500,
-                'data' => $e->getErrorDetails()
+                'data' => $e->getMessage()
             ];
             return (object)$result;
         }

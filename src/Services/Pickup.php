@@ -2,9 +2,9 @@
 
 namespace Accurate\Shipping\Services;
 
-use GraphQL\Query;
-use GraphQL\Mutation;
-use GraphQL\Variable;
+use Accurate\Shipping\Client\Query;
+use Accurate\Shipping\Client\Mutation;
+use Accurate\Shipping\Client\Variable;
 use Accurate\Shipping\Enums\Fields\Core\Field;
 use Accurate\Shipping\Enums\Fields\PickupField;
 use Accurate\Shipping\Enums\Fields\ShipmentField;
