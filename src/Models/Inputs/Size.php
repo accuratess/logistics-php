@@ -25,7 +25,7 @@ class Size
      */
     public float $width;
 
-    public function __construct(float $length = null, $width = null, float $height = null)
+    public function __construct(?float $length = null, ?float $width = null, ?float $height = null)
     {
         $this->length = $length;
         $this->width = $width;

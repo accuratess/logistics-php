@@ -108,7 +108,7 @@ class Shipment
 
     /**
      * 
-     * refrence number
+     * reference number
      * @var string $refNumber
      */
     public string $refNumber;
@@ -292,10 +292,10 @@ class Shipment
         $this->typeCode = $typeCode;
         $this->size = $size;
         $this->price = $price;
-        $this->prepareForInput();
+        $this->removeNullable();
     }
 
-    public function prepareForInput(): void
+    public function removeNullable(): void
     {
         if (is_null($this->returnPiecesCount)) unset($this->returnPiecesCount);
     }

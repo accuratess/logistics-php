@@ -10,7 +10,6 @@ class Client extends GraphQLClient
 
     public static function init(string $endpoint, array $headers = [])
     {
-        $headers['x-integation'] = 'true';
         self::$shared = new self($endpoint, $headers);
     }
 }

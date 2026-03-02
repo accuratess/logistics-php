@@ -82,7 +82,7 @@ class ListPickupFilter
 
     /**
      * 
-     * refrence number
+     * reference number
      * @var array $refNumber
      */
     public $refNumber;
@@ -291,16 +291,16 @@ class ListPickupFilter
     public $new;
 
     public function __construct(
-        array $id = null,
-        array $code = null,
-        array $search = null,
-        array $refNumber = null,
-        int $recipientZoneId = null,
-        int $recipientSubzoneId = null,
-        int $serviceId = null,
-        bool $collected = null,
-        bool $paid = null,
-        bool $new = null,
+        ?array $id = null,
+        ?array $code = null,
+        ?array $search = null,
+        ?array $refNumber = null,
+        ?int $recipientZoneId = null,
+        ?int $recipientSubzoneId = null,
+        ?int $serviceId = null,
+        ?bool $collected = null,
+        ?bool $paid = null,
+        ?bool $new = null,
         $fromDate = null,
         $toDate = null,
         $lastTransactionFromDate = null,

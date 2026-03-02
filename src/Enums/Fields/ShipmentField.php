@@ -96,7 +96,7 @@ enum ShipmentField: string
 
     static function size(array $fields): Field
     {
-        return new Field(sizefield::class, $fields, $scopeName = __FUNCTION__);
+        return new Field(SizeField::class, $fields, $scopeName = __FUNCTION__);
     }
 
     static function service(array $fields): Field

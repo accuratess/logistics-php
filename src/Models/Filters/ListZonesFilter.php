@@ -2,8 +2,6 @@
 
 namespace Accurate\Shipping\Models\Filters;
 
-use Accurate\Shipping\Models\Filters\ListServiceFilter;
-
 class ListZonesFilter
 {
     /**

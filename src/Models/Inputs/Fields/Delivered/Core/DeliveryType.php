@@ -20,5 +20,4 @@ abstract class DeliveryType
      * @var DeliveryTypeField $deliveryTypeCode
      */
     public string $deliveryTypeCode;
-
 }

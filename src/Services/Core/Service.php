@@ -8,11 +8,11 @@ use GraphQL\Exception\QueryError;
 class Service
 {
     /**
-     * 
+     *
      *
      * @param object $operation
      * @param array $variables
-     * @return void
+     * @return object
      */
     function runOperation(object $operation, ?array $variables = null)
     {

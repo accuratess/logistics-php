@@ -13,7 +13,6 @@ use Accurate\Shipping\Services\Core\Service as CoreService;
 use GraphQL\Mutation;
 use GraphQL\Query;
 use GraphQL\Variable;
-use UnitEnum;
 
 /**
  * 
@@ -101,7 +100,7 @@ class Shipment extends CoreService
      * @param integer|null $page
      * @return void
      */
-    public function listShipments(ListShipmentFilter $input, array $output, int $first = null, int $page = null): object
+    public function listShipments(ListShipmentFilter $input, array $output, ?int $first = null, ?int $page = null): object
     {
         $field = new Field(ShipmentField::class, $output);
 

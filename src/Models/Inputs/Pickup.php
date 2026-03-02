@@ -101,7 +101,7 @@ class Pickup
 
     /**
      * 
-     * refrence number
+     * reference number
      * @var string $refNumber
      */
     public string $refNumber;
@@ -242,7 +242,7 @@ class Pickup
         int $senderZoneId,
 
         $id = null,
-        string $code = null,
+        ?string $code = null,
         int $piecesCount = 1,
         int $serviceId = 1,
         string $notes = '',
