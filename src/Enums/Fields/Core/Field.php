@@ -3,7 +3,7 @@
 namespace Accurate\Shipping\Enums\Fields\Core;
 
 use Exception;
-use GraphQL\Query;
+use Accurate\Shipping\Client\Query;
 use UnitEnum;
 
 class Field
