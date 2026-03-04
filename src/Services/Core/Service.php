@@ -3,32 +3,39 @@
 namespace Accurate\Shipping\Services\Core;
 
 use Accurate\Shipping\Client\Client;
-use GraphQL\Exception\QueryError;
+use Accurate\Shipping\Client\Query;
 
 class Service
 {
     /**
+     * Executes a GraphQL operation and returns a structured result object.
      *
-     *
-     * @param object $operation
-     * @param array $variables
-     * @return object
+     * @param Query  $operation  A Query or Mutation instance.
+     * @param array  $variables  Optional GraphQL variables.
+     * @return object  { status: int, data: mixed, errors?: array }
      */
-    function runOperation(object $operation, ?array $variables = null)
+    function runOperation(Query $operation, ?array $variables = null): object
     {
         try {
-            $mutationResponse = Client::$shared->runQuery($operation, true, $variables ?? []);
-            $result =  [
+            $response = Client::$shared->runQuery($operation, true, $variables ?? []);
+
+            if ($response->hasErrors()) {
+                return (object) [
+                    'status' => 422,
+                    'data'   => null,
+                    'errors' => $response->getErrors(),
+                ];
+            }
+
+            return (object) [
                 'status' => 200,
-                'data' => $mutationResponse->getResults()
+                'data'   => $response->getResults(),
             ];
-            return (object)$result;
         } catch (\Exception $e) {
-            $result =  [
+            return (object) [
                 'status' => 500,
-                'data' => $e->getMessage()
+                'data'   => $e->getMessage(),
             ];
-            return (object)$result;
         }
     }
 }

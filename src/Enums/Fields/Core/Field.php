@@ -22,19 +22,32 @@ class Field
     }
 
     /**
-     * 
+     * Convert the selected fields to an array suitable for Query::setSelectionSet().
+     * Resets internal state on each fresh (top-level) call to prevent duplicate entries.
      *
-     * @param [type] $output
+     * @param array|null $selected Internal use for recursion — pass null from outside.
      * @return array
      */
-    function toArray($selected = null): array
+    function toArray(?array $selected = null): array
     {
-        foreach ($selected ?? $this->selected  as $value) {
+        // Reset output only on a fresh (non-recursive) call
+        if ($selected === null) {
+            $this->out = [];
+        }
+
+        foreach ($selected ?? $this->selected as $value) {
             if ($value instanceof self) {
-                $this->out[] = $this->buildQuery($value->scopeName, array_map(function ($field) {
-                    if ($field instanceof self) $this->toArray($field);
-                    return $field->value;
-                }, $value->fields));
+                // Recursively resolve nested Field scopes into a Query sub-node
+                $nestedItems = [];
+                foreach ($value->fields as $field) {
+                    if ($field instanceof self) {
+                        // Recurse into deeply nested Field
+                        $nestedItems = array_merge($nestedItems, $this->toArray($field->fields));
+                    } else {
+                        $nestedItems[] = is_string($field) ? $field : $field->value;
+                    }
+                }
+                $this->out[] = $this->buildQuery($value->scopeName, $nestedItems);
             } else {
                 $this->out[] = is_string($value) ? $value : $value->value;
             }

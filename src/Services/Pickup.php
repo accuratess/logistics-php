@@ -9,161 +9,168 @@ use Accurate\Shipping\Enums\Fields\Core\Field;
 use Accurate\Shipping\Enums\Fields\PickupField;
 use Accurate\Shipping\Enums\Fields\ShipmentField;
 use Accurate\Shipping\Models\Filters\ListPickupFilter;
-use Accurate\Shipping\Models\Inputs\filters\ShipmentById;
+use Accurate\Shipping\Models\Filters\ShipmentById as FiltersShipmentById;
 use Accurate\Shipping\Services\Core\Service as CoreService;
 use Accurate\Shipping\Models\Inputs\Shipment as InputsShipment;
 use Accurate\Shipping\Models\Inputs\UpdateStatus as UpdateStatusInput;
-use Accurate\Shipping\Models\Filters\ShipmentById as FiltersShipmentById;
 
 /**
- * 
+ * Service for Pickup-related GraphQL operations.
  */
 class Pickup extends CoreService
 {
     /**
-     * 
+     * Fetch a single shipment by ID or code.
      *
-     * @param ShipmentById $input
-     * @param array $output
-     * @return void
+     * @param FiltersShipmentById $input
+     * @param array               $output
+     * @return object
      */
-    public function shipment(FiltersShipmentById $input, array $output)
+    public function shipment(FiltersShipmentById $input, array $output): object
     {
         $field = new Field(ShipmentField::class, $output);
 
         $query = (new Query('shipment'))
-            ->setArguments($input->id != null ? ['id' => $input->id] : ['code' => $input->code])
-            ->setSelectionSet(
-                $field->toArray()
-            );
+            ->setArguments($input->id !== null ? ['id' => $input->id] : ['code' => $input->code])
+            ->setSelectionSet($field->toArray());
+
         return $this->runOperation($query);
     }
 
     /**
-     * Undocumented function
+     * Create or update a shipment.
      *
-     * @param ShipmentInput $input
-     * @param array $output
-     * @return void
+     * @param InputsShipment $input
+     * @param array          $output
+     * @return object
      */
-    public function saveShipment(InputsShipment $input, $output)
+    public function saveShipment(InputsShipment $input, array $output): object
     {
-        $field = new Field(ShipmentField::class, $output);
+        $field    = new Field(ShipmentField::class, $output);
         $mutation = (new Mutation('saveShipment'))
             ->setVariables([new Variable('input', 'ShipmentInput', true)])
             ->setArguments(['input' => '$input'])
-            ->setSelectionSet(
-                $field->toArray()
-            );
+            ->setSelectionSet($field->toArray());
 
         return $this->runOperation($mutation, $this->prepareVariables($input));
     }
 
     /**
-     * prepare variabl set for save shipment [create, update]
+     * Delete a shipment by ID.
      *
-     * @param $input
-     * @return array
-     */
-    private function prepareVariables($input): array
-    {
-        if ($input->id == null) unset($input->id);
-        if ($input->code == null) unset($input->code);
-        return ['input' => $input];
-    }
-
-    /**
-     * Undocumented function
-     *
-     * @param integer $id
+     * @param int   $id
      * @param array $output
-     * @return void
+     * @return object
      */
-    public function deleteShipment(int $id, array $output)
+    public function deleteShipment(int $id, array $output): object
     {
-        $field = new Field(ShipmentField::class, $output);
-
-        $query = (new Mutation('deleteShipment'))
+        $field    = new Field(ShipmentField::class, $output);
+        $mutation = (new Mutation('deleteShipment'))
             ->setArguments(['id' => $id])
-            ->setSelectionSet(
-                $field->toArray()
-            );
-        return $this->runOperation($query);
+            ->setSelectionSet($field->toArray());
+
+        return $this->runOperation($mutation);
     }
 
     /**
-     * Undocumented function
+     * List pickups with pagination.
      *
      * @param ListPickupFilter $input
-     * @param array $output
-     * @param [type] $paginatorInfo
-     * @param integer|null $first
-     * @param integer|null $page
-     * @return void
+     * @param array            $output
+     * @param int|null         $first
+     * @param int|null         $page
+     * @return object
      */
-    public function listPickups(ListPickupFilter $input, array $output, int $first = null, int $page = null): object
+    public function listPickups(ListPickupFilter $input, array $output, ?int $first = null, ?int $page = null): object
     {
         $field = new Field(PickupField::class, $output);
 
+        // Declare all three as variables so GraphQL variables are used consistently
         $query = (new Query('listPickups'))
-            ->setVariables([new Variable('input', 'ListPickupsFilterInput', true)])
+            ->setVariables([
+                new Variable('input', 'ListPickupsFilterInput', true),
+                new Variable('first', 'Int', false),
+                new Variable('page', 'Int', false),
+            ])
             ->setArguments([
                 'input' => '$input',
-                'first' => $first,
-                'page' => $page
-            ])->setSelectionSet(
-                [
-                    (new Query('paginatorInfo'))->setSelectionSet(
-                        [
-                            "hasMorePages",
-                            "currentPage",
-                            "count",
-                            "total",
-                            "lastPage"
-                        ]
-                    ),
-                    (new Query('data'))->setSelectionSet(
-                        $field->toArray()
-                    )
-                ]
-            );
+                'first' => '$first',
+                'page'  => '$page',
+            ])
+            ->setSelectionSet([
+                (new Query('paginatorInfo'))->setSelectionSet([
+                    'hasMorePages',
+                    'currentPage',
+                    'count',
+                    'total',
+                    'lastPage',
+                ]),
+                (new Query('data'))->setSelectionSet($field->toArray()),
+            ]);
 
-        $result = (object) array_filter((array) $input, fn ($val) => !is_null($val));
-        $variables = [
-            'input' => $result, 'first' => $first, 'page' => $page
+        $cleanInput = (object) array_filter((array) $input, fn($val) => !is_null($val));
+        $variables  = [
+            'input' => $cleanInput,
+            'first' => $first ?? 20,
+            'page'  => $page ?? 1,
         ];
-        /** @var mixed */
-        $result = $this->runOperation($query, $variables);
-        return $result;
+
+        return $this->runOperation($query, $variables);
     }
 
     /**
-     * the delivery Agent is only use this 
+     * Update the status of a pickup.
      *
      * @param UpdateStatusInput $input
-     * @param array $output
+     * @param array             $output
+     * @return object
      */
-    public function updatePickupStatus(UpdateStatusInput $input, array $output)
+    public function updatePickupStatus(UpdateStatusInput $input, array $output): object
     {
-        $field = new Field(PickupField::class, $output);
+        $field    = new Field(PickupField::class, $output);
         $mutation = (new Mutation('updatePickupStatus'))
             ->setVariables([new Variable('input', 'UpdatePickupStatusInput', true)])
             ->setArguments(['input' => '$input'])
-            ->setSelectionSet(
-                $field->toArray()
-            );
-        return $this->runOperation($mutation, ['input' => $this->prepareInput($input)]);
+            ->setSelectionSet($field->toArray());
+
+        return $this->runOperation($mutation, ['input' => $this->removeNulls($input)]);
     }
 
-    function prepareInput($input)
+    // ------------------------------------------------------------------ //
+    //  Private helpers
+    // ------------------------------------------------------------------ //
+
+    private function prepareVariables(InputsShipment $input): array
     {
-        $inputValues = [];
-        foreach ($input as $key => $value) {
-            if (!is_null($value)) {
-                if (!is_object($value) && !is_array($value)) $inputValues[$key] = $value;
-                if (is_object($value) || is_array($value)) $inputValues = array_merge($inputValues, $this->prepareInput($value));
+        $data = clone $input;
+        if ($data->id === null)   unset($data->id);
+        if ($data->code === null) unset($data->code);
+        return ['input' => $data];
+    }
+
+    /**
+     * Recursively remove null values from an object/array while
+     * preserving the nested structure (does NOT flatten).
+     */
+    private function removeNulls(mixed $input): mixed
+    {
+        if (is_object($input)) {
+            $result = [];
+            foreach ((array) $input as $key => $value) {
+                if (!is_null($value)) {
+                    $result[$key] = $this->removeNulls($value);
+                }
             }
+            return (object) $result;
         }
-        return  $inputValues;
+
+        if (is_array($input)) {
+            return array_filter(
+                array_map(fn($v) => $this->removeNulls($v), $input),
+                fn($v) => !is_null($v)
+            );
+        }
+
+        return $input;
     }
 }

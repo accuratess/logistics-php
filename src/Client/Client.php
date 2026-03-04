@@ -24,18 +24,20 @@ class Client
         ]);
     }
 
-    public static function init(string $endpoint, array $headers = [])
+    public static function init(string $endpoint, array $headers = []): void
     {
         self::$shared = new self($endpoint, $headers);
     }
 
-    public function runQuery($query, bool $resultsAsArray = false, array $variables = [])
+    public function runQuery(Query $query, bool $resultsAsArray = false, array $variables = []): GraphQLResponse
     {
+        // Ensure the operation renders with the correct `query { }` / `mutation { }` wrapper
+        $query->markAsRoot();
         $queryString = (string) $query;
         $fileMap = $this->extractFiles($variables);
 
         if (empty($fileMap)) {
-            $response = $this->httpClient->post('', [
+            $response = $this->httpClient->post(self::$shared->endpoint, [
                 'json' => [
                     'query'     => $queryString,
                     'variables' => $variables,
@@ -54,12 +56,24 @@ class Client
 
             $map = [];
             $index = 0;
-            foreach ($fileMap as $path => $filePath) {
+            foreach ($fileMap as $path => $fileSource) {
                 $map[$index] = [$path];
+
+                $contents = $fileSource;
+                $filename = 'file';
+
+                if (is_string($fileSource)) {
+                    $contents = fopen($fileSource, 'r');
+                    $filename = basename($fileSource);
+                } elseif ($fileSource instanceof \Psr\Http\Message\UploadedFileInterface) {
+                    $contents = $fileSource->getStream()->detach();
+                    $filename = $fileSource->getClientFilename();
+                }
+
                 $multipart[] = [
                     'name'     => (string) $index,
-                    'contents' => fopen($filePath, 'r'),
-                    'filename' => basename($filePath),
+                    'contents' => $contents,
+                    'filename' => $filename,
                 ];
                 $index++;
             }
@@ -70,7 +84,7 @@ class Client
                 'contents' => json_encode($map),
             ]]);
 
-            $response = $this->httpClient->post('', [
+            $response = $this->httpClient->post(self::$shared->endpoint, [
                 'multipart' => $multipart,
             ]);
         }
@@ -78,17 +92,10 @@ class Client
         $contents = $response->getBody()->getContents();
         $data = json_decode($contents, $resultsAsArray);
 
-        return new class($data) {
-            private $data;
-            public function __construct($data) { $this->data = $data; }
-            public function getResults() { 
-                return is_array($this->data) ? ($this->data['data'] ?? []) : ($this->data->data ?? []); 
-            }
-            public function getData() { return $this->data; }
-        };
+        return new GraphQLResponse($data);
     }
 
-    private function extractFiles(&$variables, string $path = 'variables'): array
+    protected function extractFiles(&$variables, string $path = 'variables'): array
     {
         $files = [];
         if (is_array($variables) || is_object($variables)) {
@@ -97,7 +104,10 @@ class Client
                 if (is_string($value) && @file_exists($value) && !is_dir($value)) {
                     $files[$currentPath] = $value;
                     $value = null;
-                } elseif (is_array($value) || is_object($value)) {
+                } elseif ($value instanceof \Psr\Http\Message\UploadedFileInterface) {
+                    $files[$currentPath] = $value;
+                    $value = null;
+                } elseif (is_object($value) || is_array($value)) {
                     $files = array_merge($files, $this->extractFiles($value, $currentPath));
                 }
             }

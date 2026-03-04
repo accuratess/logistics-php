@@ -2,6 +2,4 @@
 
 namespace Accurate\Shipping\Client;
 
-class Mutation extends Query
-{
-}
+class Mutation extends Query {}

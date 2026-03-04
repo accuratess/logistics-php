@@ -8,10 +8,21 @@ class Query
     protected array $arguments = [];
     protected array $selectionSet = [];
     protected array $variables = [];
+    protected bool $isRoot = false;
 
     public function __construct(string $operation)
     {
         $this->operation = $operation;
+    }
+
+    /**
+     * Mark this as a root-level GraphQL operation.
+     * Only root operations get the "query { }" / "mutation { }" wrapper.
+     */
+    public function markAsRoot(): self
+    {
+        $this->isRoot = true;
+        return $this;
     }
 
     public function setArguments(array $arguments): self
@@ -36,15 +47,19 @@ class Query
     {
         $args = $this->formatArguments($this->arguments);
         $selection = $this->formatSelectionSet($this->selectionSet);
-        $vars = $this->formatVariables($this->variables);
 
-        $queryType = $this instanceof Mutation ? 'mutation' : 'query';
-        
-        if ($vars) {
-            return "$queryType$vars { {$this->operation}$args { $selection } }";
+        // Nested selection-set node — renders as just "fieldName(args) { fields }"
+        if (!$this->isRoot) {
+            if (empty($this->selectionSet)) {
+                return "{$this->operation}$args";
+            }
+            return "{$this->operation}$args { $selection }";
         }
 
-        return "{$queryType} { {$this->operation}$args { $selection } }";
+        // Root operation — renders as "query($vars) { operation(args) { fields } }"
+        $vars = $this->formatVariables($this->variables);
+        $queryType = $this instanceof Mutation ? 'mutation' : 'query';
+        return "{$queryType}{$vars} { {$this->operation}$args { $selection } }";
     }
 
     protected function formatArguments(array $args): string

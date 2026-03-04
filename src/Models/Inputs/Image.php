@@ -7,7 +7,7 @@ use GuzzleHttp\Psr7\UploadedFile;
 class Image
 {
     public function __construct(
-        public UploadedFile $file,
-        public ?string $subjectCode,
+        public ?UploadedFile $file,
+        public ?string $subjectCode = null,
     ) {}
 }

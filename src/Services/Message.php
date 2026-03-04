@@ -11,18 +11,16 @@ use Accurate\Shipping\Client\Variable;
 
 class Message extends Service
 {
-    public function createMessage(MessageInput $input, array $images, $output)
+    public function createMessage(MessageInput $input, $output)
     {
         $field = new Field(MessageField::class, $output);
 
         $mutation = (new Mutation('createConversationMessage'))
             ->setVariables([
                 new Variable('input', 'MessageInput', true),
-                new Variable('images', '[ImageInput!]', true)
             ])
             ->setArguments([
                 'input' => '$input',
-                'images' => '$images'
             ])
             ->setSelectionSet(
                 $field->toArray()
@@ -30,7 +28,6 @@ class Message extends Service
 
         return $this->runOperation($mutation, [
             'input' => $input,
-            'images' => $images
         ]);
     }
 }
