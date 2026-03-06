@@ -43,15 +43,8 @@ class Field
         return $this->out;
     }
 
-    /**
-     * 
-     *
-     * @param [type] $queryName
-     * @param [type] $selectedValues
-     * @return Query
-     */
-    function buildQuery($queryName, $selectedValues): Query
+    function buildQuery($queryName, $selectedValues): string
     {
-        return (new Query($queryName))->setSelectionSet($selectedValues);
+        return $queryName . ' { ' . implode(' ', $selectedValues) . ' }';
     }
 }

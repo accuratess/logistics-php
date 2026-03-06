@@ -18,6 +18,15 @@ class Service
     {
         try {
             $mutationResponse = Client::$shared->runQuery($operation, true, $variables ?? []);
+            
+            $fullData = $mutationResponse->getData();
+            if (isset($fullData['errors'])) {
+                return (object)[
+                    'status' => 400,
+                    'data' => $fullData['errors']
+                ];
+            }
+
             $result =  [
                 'status' => 200,
                 'data' => $mutationResponse->getResults()

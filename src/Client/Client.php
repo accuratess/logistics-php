@@ -91,6 +91,10 @@ class Client
     private function extractFiles(&$variables, string $path = 'variables'): array
     {
         $files = [];
+        if ($variables instanceof \UnitEnum) {
+            return $files;
+        }
+
         if (is_array($variables) || is_object($variables)) {
             foreach ($variables as $key => &$value) {
                 $currentPath = $path . '.' . $key;
