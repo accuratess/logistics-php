@@ -132,7 +132,7 @@ class Shipment extends CoreService
             ->setArguments(['input' => '$input'])
             ->setSelectionSet($field->toArray());
 
-        return $this->runOperation($mutation, ['input' => $this->removeNulls($input)]);
+        return $this->runOperation($mutation, ['input' => $this->prepareInput($input)]);
     }
 
     // ------------------------------------------------------------------ //
@@ -147,29 +147,17 @@ class Shipment extends CoreService
         return ['input' => $data];
     }
 
-    /**
-     * Recursively remove null values from an object/array while
-     * preserving the nested structure (does NOT flatten).
-     */
-    private function removeNulls(mixed $input): mixed
+    private function prepareInput($input)
     {
-        if (is_object($input)) {
-            $result = [];
-            foreach ((array) $input as $key => $value) {
-                if (!is_null($value)) {
-                    $result[$key] = $this->removeNulls($value);
-                }
+        $inputValues = [];
+
+        foreach ($input as $key => $value) {
+            if (!is_null($value)) {
+                if (!is_object($value) && !is_array($value)) $inputValues[$key] = $value;
+                if (is_object($value) || is_array($value)) $inputValues = array_merge($inputValues, $this->prepareInput($value));
             }
-            return (object) $result;
         }
 
-        if (is_array($input)) {
-            return array_filter(
-                array_map(fn($v) => $this->removeNulls($v), $input),
-                fn($v) => !is_null($v)
-            );
-        }
-
-        return $input;
+        return  $inputValues;
     }
 }
