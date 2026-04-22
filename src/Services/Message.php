@@ -15,7 +15,7 @@ class Message extends Service
     {
         $field = new Field(MessageField::class, $output);
 
-        $mutation = (new Mutation('createConversationMessage'))
+        $mutation = (new Mutation('createMessage'))
             ->setVariables([
                 new Variable('input', 'MessageInput', true),
             ])

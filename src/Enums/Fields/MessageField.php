@@ -11,6 +11,7 @@ enum MessageField: string
 {
     case ID = "id";
     case BODY = "body";
+    case TYPE_CODE = "typeCode";
     case READ_AT = "readAt";
     case CREATED_AT = "createdAt";
 

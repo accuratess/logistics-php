@@ -2,11 +2,14 @@
 
 namespace Accurate\Shipping\Models\Inputs;
 
+use Accurate\Shipping\Enums\Types\MessageTypeCode;
 use InvalidArgumentException;
 
 class Message
 {
     public function __construct(
+        public MessageTypeCode $typeCode,
+        public ?Coordinate $coordinates = null,
         public ?int $conversationId = null,
         public ?int $shipmentId = null,
         public ?int $remoteShipmentId = null,  // Made nullable to allow one of them to be null
@@ -31,5 +34,6 @@ class Message
         if (is_null($this->shipmentId)) unset($this->shipmentId);
         if (is_null($this->conversationId)) unset($this->conversationId);
         if (is_null($this->images)) unset($this->images);
+        if (is_null($this->coordinates)) unset($this->coordinates);
     }
 }
