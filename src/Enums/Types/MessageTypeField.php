@@ -2,7 +2,7 @@
 
 namespace Accurate\Shipping\Enums\Types;
 
-enum MessageTypeCode: string
+enum MessageTypeField: string
 {
     case TEXT     = 'TEXT';     // text message
     case LOCATION = 'LOCATION'; // location message
