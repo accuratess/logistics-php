@@ -20,22 +20,20 @@ class Service
             $response = Client::$shared->runQuery($operation, true, $variables ?? []);
 
             if ($response->hasErrors()) {
-                return (object) [
-                    'status' => 422,
-                    'data'   => null,
-                    'errors' => $response->getErrors(),
-                ];
+                return $this->response($response->getErrors(), 422);
             }
 
-            return (object) [
-                'status' => 200,
-                'data'   => $response->getResults(),
-            ];
+            return $this->response($response->getResults(), 200);
         } catch (\Exception $e) {
-            return (object) [
-                'status' => 500,
-                'data'   => $e->getMessage(),
-            ];
+            return $this->response($e->getMessage(), 500);
         }
+    }
+
+    protected function response(mixed $data, int $status = 200): object
+    {
+        return (object) [
+            'status' => $status,
+            'data'   => $data
+        ];
     }
 }
