@@ -15,7 +15,7 @@ class UpdateStatus
 {
     public function __construct(
         public ?int $id = null,  // Made nullable to allow one of them to be null
-        public ?int $remoteShipmentId = null,  // Made nullable to allow one of them to be null
+        public ?string $remoteShipmentId = null,  // Made nullable to allow one of them to be null
         public ?string $notes = '',
         public ?DeliveredField $deliveredField = null,
         public ?ExceptionField $deliveryException = null,
