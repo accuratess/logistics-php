@@ -132,7 +132,9 @@ class Shipment extends CoreService
             ->setArguments(['input' => '$input'])
             ->setSelectionSet($field->toArray());
 
-        return $this->runOperation($mutation, ['input' => $this->prepareInput($input)]);
+        if ($images = $input->images) unset($input->images);
+
+        return $this->runOperation($mutation, ['input' => array_merge($this->prepareInput($input), ['images' => $images])]);
     }
 
     // ------------------------------------------------------------------ //
@@ -158,6 +160,6 @@ class Shipment extends CoreService
             }
         }
 
-        return  $inputValues;
+        return $inputValues;
     }
 }
