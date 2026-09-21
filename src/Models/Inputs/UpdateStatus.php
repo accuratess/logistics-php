@@ -21,6 +21,8 @@ class UpdateStatus
         public ?ExceptionField $deliveryException = null,
         public ?HoldedField $holdToRedeliver = null,
         public ?ReturnField $returnField = null,
+        // NOTE: Making images nullable doesn't break backward compatibility for old tenants (they don't have images)
+        public ?array $images = [],
     ) {
         // Validate that at least one of $id or $remoteShipmentId is provided
         if (is_null($id) && is_null($remoteShipmentId)) {
