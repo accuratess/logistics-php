@@ -15,7 +15,7 @@ class Service extends CoreService
     {
         $field = new Field(ServiceField::class, $output);
         $query = (new Query('listShippingServicesDropdown'))
-            ->setVariables([new Variable('input', 'ListServicesFilterInput', true)])
+            ->setVariables([new Variable('input', 'ListShippingServicesFilterInput', true)])
             ->setArguments([
                 'input' => '$input',
             ])
