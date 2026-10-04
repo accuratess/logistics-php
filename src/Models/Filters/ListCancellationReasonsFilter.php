@@ -2,10 +2,9 @@
 
 namespace Accurate\Shipping\Models\Filters;
 
-class ListZonesFilter
+class ListCancellationReasonsFilter
 {
     public function __construct(
-        public ?int $parentId = null,
-        public ?bool $active = null,
+        public ?int $active = null,
     ) {}
 }

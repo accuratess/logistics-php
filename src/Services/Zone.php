@@ -14,7 +14,7 @@ class Zone extends Service
     /**
      * list zones if parentId = null or subzones parentId = the parentId that you want to get subzones for it 
      *
-     * @param ListZonesFilterInput $input
+     * @param ListZonesFilter $input
      * @param array $output
      * @param [type] $paginatorInfo
      * @param integer|null $first
@@ -28,7 +28,8 @@ class Zone extends Service
             ->setVariables([new Variable('input', 'ListZonesFilterInput', true)])
             ->setArguments([
                 'input' => '$input',
-            ])->setSelectionSet(
+            ])
+            ->setSelectionSet(
                 $field->toArray()
             );
 
