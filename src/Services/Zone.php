@@ -11,16 +11,6 @@ use Accurate\Shipping\Client\Variable;
 
 class Zone extends Service
 {
-    /**
-     * list zones if parentId = null or subzones parentId = the parentId that you want to get subzones for it 
-     *
-     * @param ListZonesFilter $input
-     * @param array $output
-     * @param [type] $paginatorInfo
-     * @param integer|null $first
-     * @param integer|null $page
-     * @return void
-     */
     public function listZones(ListZonesFilter $input, array $output)
     {
         $field = new Field(ZoneField::class, $output);
