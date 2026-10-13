@@ -11,7 +11,7 @@ use Accurate\Shipping\Models\Inputs\Fields\Return\Core\ReturnType;
  */
 class PartialyDueField extends ReturnType
 {
-    public function __construct(public float $fees, public int $cancellationReasonId)
+    public function __construct(public float $fees, public ?int $cancellationReasonId = null)
     {
         $this->statusCode = (ShipmentStatusField::RTS)->value;
         $this->returnTypeCode = (ReturnTypeField::WPDF)->value;

@@ -9,7 +9,7 @@ class HoldedField
     public string $statusCode;
 
     public function __construct(
-        public int $cancellationReasonId,
+        public ?int $cancellationReasonId = null,
         public $deliveryDate = null,
     ) {
         $this->statusCode = (ShipmentStatusField::HTR)->value;

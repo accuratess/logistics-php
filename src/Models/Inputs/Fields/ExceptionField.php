@@ -8,7 +8,7 @@ class ExceptionField
 {
     public string $statusCode;
 
-    public function __construct(public int $cancellationReasonId)
+    public function __construct(public ?int $cancellationReasonId = null)
     {
         $this->statusCode = (ShipmentStatusField::DEX)->value;
     }

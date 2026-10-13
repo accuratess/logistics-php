@@ -9,5 +9,5 @@ abstract class ReturnType
 {
     public string $statusCode;
     public string $returnTypeCode;
-    public int $cancellationReasonId;
+    public ?int $cancellationReasonId = null;
 }
